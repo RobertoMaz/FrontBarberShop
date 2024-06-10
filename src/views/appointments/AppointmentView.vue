@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Vista de appoinment</h1>
+        <h1>Vista de appointment</h1>
     </div>
 </template>
 

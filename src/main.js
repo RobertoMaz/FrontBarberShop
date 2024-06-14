@@ -10,18 +10,16 @@ import "vue-toast-notification/dist/theme-bootstrap.css"
 import App from './App.vue'
 import router from './router'
 
-const toast = useToast({
-    duration: 5000,
+const $toast = useToast({
+    duration: 8000,
     position: 'top-right'
 })
 
-toast.open({
-    message: 'Probando toast',
-    type: 'success'
-})
+
 
 const app = createApp(App)
 
+app.provide('toast', $toast)
 app.use(createPinia())
 app.use(plugin, defaultConfig(config))
 app.use(router)

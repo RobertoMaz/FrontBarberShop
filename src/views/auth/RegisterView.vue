@@ -3,6 +3,7 @@
     <h1 class="text-6xl font-extrabold text-white text-center mt-10">Crea una cuenta</h1>
     <p class="text-2xl text-white text-center my-5">Crea una cuenta en BarberShopr</p>
     <FormKit
+        id="registerForm"
         type="form"
         :actions="false"
         incomplete-message="No se pudo crear la cuenta"
@@ -65,12 +66,27 @@
 
 <script setup>
     import AuthApi from '@/api/AuthApi'
+    import { inject } from 'vue'
+    import { reset } from '@formkit/vue'
+    const toast = inject('toast')
 
-    const handleSubmit = async ({password_confirm, ...data}) => {
+
+    const handleSubmit = async ({password_confirm, ...formData}) => {
         try {
-            await AuthApi.register(data)
+            const { data } =  await AuthApi.register(formData)
+            
+                toast.open({
+                    message: data.msg,
+                    type: 'success'
+                })
+                reset('registerForm')
+
+            
         } catch (error) {
-            console.log(error)
+            toast.open({
+                message: error.response.data.msg,
+                type: 'error'
+            })
         }
     }
 </script>

@@ -9,11 +9,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@formkit/themes": "^1.6.5",
+    "@formkit/vue": "^1.6.5",
     "axios": "^1.7.2",
     "pinia": "^2.1.7",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",
-    "vue-tailwind-datepicker": "^1.7.3"
+    "vue-tailwind-datepicker": "^1.7.3",
+    "vue-toast-notification": "^3.1.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",

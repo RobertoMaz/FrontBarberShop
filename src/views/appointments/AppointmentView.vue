@@ -78,6 +78,7 @@ import { ref } from 'vue';
         month:'MMMM'
     })
     const today = new Date()
+    today.setHours(0, 0, 0, 0)
 
     const disableDate = (date) => {
         // [0,1].includes(date.getDay())  0 es el domingo, 1 es lunes

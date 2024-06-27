@@ -31,8 +31,10 @@
 <script setup>
     import { useUserStore } from '@/stores/user'
     import Appointment from '../../components/Appointment.vue'
+    // import { onMounted } from 'vue'
 
     const user = useUserStore()
-
+    
+    
 
 </script>

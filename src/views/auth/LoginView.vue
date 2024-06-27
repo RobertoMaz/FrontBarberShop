@@ -51,12 +51,12 @@
     const toast = inject('toast')
 
 
-
     const handleSubmit = async (formData) => {
         try {
             const {data: { token }} = await AuthApi.login(formData)
 
             localStorage.setItem('AUTH_TOKEN', token)
+            
             router.push({name: 'my-appointments'})
         } catch (error) {
             toast.open({

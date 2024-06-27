@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import AppointmentsLayout from '@/views/appointments/AppointmentsLayout.vue'
 import AuthApi from '@/api/AuthApi'
+import { useUserStore } from '@/stores/user'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -9,7 +10,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      meta: { requiresRedirect: true },
     },
     {
       path: '/admin',
@@ -27,8 +28,8 @@ const router = createRouter({
     {
       path: '/reservaciones',
       name: 'appointments',
-      component: AppointmentsLayout,
       meta: { requiresAuth: true },
+      component: AppointmentsLayout,
       children: [
         {
           path: '',
@@ -127,8 +128,9 @@ router.beforeEach( async (to, from, next) => {
   const requiresAdmin = to.matched.some(url => url.meta.requiresAdmin)
 
   if(requiresAdmin){
+
     try {
-      await AuthApi.admin()
+      const {data} = await AuthApi.admin()
       next()
     } catch (error) {
       next({name: 'login'})
@@ -137,5 +139,32 @@ router.beforeEach( async (to, from, next) => {
     next()
   }
 })
+
+router.beforeEach( async (to, from, next) => {
+  const requiresRedirect = to.matched.some(url => url.meta.requiresRedirect)
+
+  if(requiresRedirect){
+
+    try {
+      const token = localStorage.getItem('AUTH_TOKEN')
+      if(!token){
+        return next({name: 'login'})
+      }
+
+      const { data } = await AuthApi.auth()
+      if(data.admin){
+        next({name: 'admin-appointments'})
+      } else {
+        next({name: 'appointments'})
+      }
+
+    } catch (error) {
+      next({name: 'login'})
+    }
+  } else {
+    next()
+  }
+})
+
 
 export default router

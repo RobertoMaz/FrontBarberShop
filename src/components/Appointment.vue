@@ -20,7 +20,7 @@
                 Editar Cita
             </RouterLink>
             <RouterLink
-                :to="{name: 'edit-appointment-details', params: { id: appointment._id}}"
+                :to="{name: 'my-appointments'}"
                 class="bg-red-700 rounded-lg p-3 text-white text-sm uppercase font-black flex-1 md:flex-none"
                 @click="appointments.cancelAppointment(appointment._id)"
             >

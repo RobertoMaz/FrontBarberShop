@@ -69,7 +69,7 @@
     import { useAppointmentsStore } from '@/stores/appointments'
     import { formatCurrency } from '@/helpers'
     import VueTailwindDatePicker from 'vue-tailwind-datepicker'
-import { ref } from 'vue';
+    import { ref } from 'vue'
 
     const appointments = useAppointmentsStore()
 

@@ -13,6 +13,7 @@ export const useAppointmentsStore = defineStore('appointments', () => {
     const time = ref('')
     const appointmentsByDate = ref([])
     const appointmentId = ref('')
+    const idAppointment = ref('')
 
     const toast = inject('toast')
 
@@ -27,7 +28,10 @@ export const useAppointmentsStore = defineStore('appointments', () => {
         }
     })
 
-    watch(date, async () =>{
+    // watch(date, async () =>{
+    watch(idAppointment, async () =>{
+        console.log(idAppointment.value)
+        console.log(appointmentId.value)
         time.value = ''
         if(date.value === '') return
         const { data } = await AppointmentApi.getByDate(date.value)
@@ -38,6 +42,17 @@ export const useAppointmentsStore = defineStore('appointments', () => {
         } else {
             appointmentsByDate.value = data
         }
+    })
+
+    watch(date, async() => {
+        const { data } = await AppointmentApi.getByDate(date.value)
+        
+        console.log(data)
+        console.log(appointmentId.value)
+        // if(appointmentId.value) {
+        //     time.value = data.filter(appointment => appointment._id === appointmentId.value)[0].time
+        //     appointmentsByDate.value = data.filter(appointment => appointment._id !== appointmentId.value)
+        // } 
     })
 
     async function saveAppointment() {
@@ -123,13 +138,13 @@ export const useAppointmentsStore = defineStore('appointments', () => {
     }
 
     function setSelectedAppointment(appointment) {
-
+        idAppointment.value = appointment._id
         services.value = appointment.services
         date.value = convertToDDMMYYYY(appointment.date)
         time.value = appointment.time
         appointmentId.value = appointment._id
     }
-
+ 
     const isServiceSelected = computed(() => {
         return id => services.value.some(service => service._id === id)
     })
@@ -153,7 +168,6 @@ export const useAppointmentsStore = defineStore('appointments', () => {
             return appointmentsByDate.value.find(appointment => appointment.time === hour)
         }
     })
-
 
 
     return {

@@ -38,15 +38,9 @@
     import { onMounted } from 'vue'
 
     const user = useUserStore()
-
-    // if(!user.user.length){
-    //     user.login()
-    //     console.log(user.userAppointments)
-    // }
-  
+ 
     onMounted(() => {
         user.login()
-        console.log(user.userAppointments)
     })
 
 

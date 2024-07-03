@@ -15,8 +15,6 @@ const $toast = useToast({
     position: 'top-right'
 })
 
-
-
 const app = createApp(App)
 
 app.provide('toast', $toast)

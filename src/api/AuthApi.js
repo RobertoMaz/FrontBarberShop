@@ -24,6 +24,6 @@ export default {
     },
     admin(){
         return api.get(`/auth/admin`)
-    },
+    }
 }
 

@@ -10,7 +10,6 @@
     import { onMounted } from 'vue'
 
     const user = useUserStore()
-
     
     if(!user.user.length){
         user.login()

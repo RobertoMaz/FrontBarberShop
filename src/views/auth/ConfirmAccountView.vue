@@ -10,10 +10,8 @@
     import AuthApi from '@/api/AuthApi.js'
 
     const route = useRoute()
-    const router = useRouter()
 
     const toast = inject('toast')
-
 
     const { token } = route.params
 
@@ -24,13 +22,6 @@
                 message: data.msg,
                 type: 'success'
             })
-
-            // setTimeout(() => {
-            //     router.push({name: 'login'})
-            // }, 2000)
-            // res.json({
-                
-            // })
         } catch (error) {
             toast.open({
                 message: error.response.data.msg,

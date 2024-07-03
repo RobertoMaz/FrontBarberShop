@@ -81,8 +81,8 @@
     today.setHours(0, 0, 0, 0)
 
     const disableDate = (date) => {
+        // desactivar dias de la semana
         // [0,1].includes(date.getDay())  0 es el domingo, 1 es lunes
         return date < today || date.getMonth() > today.getMonth() + 1 || [0].includes(date.getDay())
-        // return date < today || date.getWe() > today.getMonth() + 1
     }
 </script>

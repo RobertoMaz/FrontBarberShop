@@ -42,6 +42,4 @@
     onMounted(() => {
         user.login()
     })
-
-
 </script>

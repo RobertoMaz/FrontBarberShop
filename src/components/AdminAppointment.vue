@@ -33,5 +33,4 @@
             type: Object
         }
     })
-
 </script>

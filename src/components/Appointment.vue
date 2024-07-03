@@ -24,7 +24,7 @@
                 class="bg-red-700 rounded-lg p-3 text-white text-sm uppercase font-black flex-1 md:flex-none"
                 @click="appointments.cancelAppointment(appointment._id)"
             >
-                Cancnelar Cita
+                Cancelar Cita
             </RouterLink>
         </div>
     </div>

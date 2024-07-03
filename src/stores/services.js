@@ -16,6 +16,6 @@ export const useServicesStore = defineStore('services', () => {
     })
 
     return{
-        services,
+        services
     }
 })

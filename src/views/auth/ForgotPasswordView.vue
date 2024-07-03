@@ -50,7 +50,6 @@
                 message: error.response.data.msg,
                 type: 'error'
             })
-
         }
     }
 </script>

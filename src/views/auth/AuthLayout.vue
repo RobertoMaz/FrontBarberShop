@@ -13,8 +13,7 @@
 </template>
 
 <script setup>
-import { useRoute } from 'vue-router'
-
+    import { useRoute } from 'vue-router'
 
     const route = useRoute()
 
@@ -22,8 +21,6 @@ import { useRoute } from 'vue-router'
         { name: 'register', text: 'Crear una cuenta'},
         { name: 'login', text: 'Iniciar Sesión'},
         { name: 'forgot-password', text: 'Olvide mi password'}
-    ]
-
-    
+    ]    
 </script>
  

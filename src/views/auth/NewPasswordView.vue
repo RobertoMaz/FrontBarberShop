@@ -62,7 +62,6 @@
     const { token } = route.params
 
     onMounted(async () => {
-
         try {
             await AuthApi.verifyPasswordResetToken(token)
             validToken.value = true
@@ -72,7 +71,6 @@
                 type: 'error'
             })
         }
-
     })
 
 
@@ -85,18 +83,15 @@
             })
 
             loading.value = true
+
             setTimeout(() => {
                 router.push({name: 'login'})
             }, 1000)
-            
-            // reset('forgotPassword')
-
         } catch (error) {
             toast.open({
                 message: error.response.data.msg,
                 type: 'error'
             })
-
         }
     }
 </script>

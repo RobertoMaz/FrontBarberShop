@@ -27,16 +27,15 @@ export const useAppointmentsStore = defineStore('appointments', () => {
         }
     })
 
-    // watch(date, async () =>{
     watch(appointmentId, async () =>{
-        // console.log(date.value)
         time.value = ''
+
         if(date.value === '') return
+
         const { data } = await AppointmentApi.getByDate(date.value)
         
         if(appointmentId.value) {
             time.value = data.filter(appointment => appointment._id === appointmentId.value)[0].time
-            // console.log(time.value)
             appointmentsByDate.value = data.filter(appointment => appointment._id !== appointmentId.value)
         } else {
             appointmentsByDate.value = data
@@ -45,16 +44,19 @@ export const useAppointmentsStore = defineStore('appointments', () => {
 
     watch(date, async() => {
         time.value = ''
+
         if(date.value === '') return
+
         const { data } = await AppointmentApi.getByDate(date.value)
         
         if(appointmentId.value) {
             time.value = data.filter(appointment => appointment._id === appointmentId.value)
+            //TODO
+            // revisar si quito estoy falla algo, creo que no
             if(time.value.length === 0){
             } else {
                 time.value = time.value[0].time
             }
-            // console.log(time.value)
             appointmentsByDate.value = data.filter(appointment => appointment._id !== appointmentId.value)
         } else {
             appointmentsByDate.value = data
@@ -75,9 +77,7 @@ export const useAppointmentsStore = defineStore('appointments', () => {
                 toast.open({
                     message: data.msg,
                     type: 'success'
-                })
-    
-              
+                }) 
             } catch (error) {
                 toast.open({
                     message: error.response.data.msg,
@@ -90,8 +90,7 @@ export const useAppointmentsStore = defineStore('appointments', () => {
                 toast.open({
                     message: data.msg,
                     type: 'success'
-                })
-                    
+                }) 
             } catch (error) {
                 toast.open({
                     message: error.response.data.msg,
@@ -103,16 +102,13 @@ export const useAppointmentsStore = defineStore('appointments', () => {
         clearAppointmentData()
         user.getUserAppointments()
         router.push({name: 'my-appointments'})
-
     }
 
     function clearAppointmentData() {
-        
         services.value = []
         date.value = ''
         time.value = ''
-        appointmentId.value = ''
-        
+        appointmentId.value = ''   
     }
 
     async function cancelAppointment(id) {
@@ -134,7 +130,6 @@ export const useAppointmentsStore = defineStore('appointments', () => {
     }
 
     function onServiceSelected(service) {
-
         if(services.value.some(selectedService => selectedService._id === service._id)){
             services.value = services.value.filter(selectedService => selectedService._id !== service._id)
         } else {

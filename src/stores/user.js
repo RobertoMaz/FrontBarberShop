@@ -1,9 +1,9 @@
 import { defineStore } from "pinia"
-import { ref, onMounted, computed, watch } from "vue"
+import { ref, onMounted, computed } from "vue"
 import AuthApi from "@/api/AuthApi"
 import { useRouter  } from "vue-router"
 import AppointmentApi from "@/api/AppointmentApi"
-import { convertToDDMMYYYY, convertToISO, displayDate } from "@/helpers/date"
+import { convertToDDMMYYYY } from "@/helpers/date"
 
 export const useUserStore = defineStore('user', () => {
 
@@ -11,15 +11,13 @@ export const useUserStore = defineStore('user', () => {
     const userAppointments = ref([])
     const loading = ref(true)
    
-
     const router = useRouter()
   
-   
     onMounted( async() => {
         try {
             const { data } = await AuthApi.auth()
             user.value = data
-            //dejar comentado, sino llama 2 veces a la funcion. Revisar si pasa lo mismo con admin
+            // dejar comentado, sino llama 2 veces a la funcion. Revisar si pasa lo mismo con admin
             // await getUserAppointments()
         } catch (error) {
             console.log(error)
@@ -28,10 +26,8 @@ export const useUserStore = defineStore('user', () => {
         }
     })
 
-
     async function login(){
-        try {
-            
+        try {  
             const { data } = await AuthApi.auth()
             user.value = data
             
@@ -43,28 +39,14 @@ export const useUserStore = defineStore('user', () => {
         }
     }
     
-
-
-    
     async function getUserAppointments() {
         const  { data } = await AppointmentApi.getUserAppointments(user.value._id)
         const today = new Date()
         const hour = today.getHours()
         
-        
-        
-        // console.log(hour)
-        // console.log(convertToDDMMYYYY(hour))
-        // console.log(convertToDDMMYYYY(hour))
         for (const arr of data){
             arr.onlyHour = parseInt(arr.time.split(':')[0])
-            // if(convertToDDMMYYYY(arr.date) >= convertToDDMMYYYY(today) && arr.onlyHour >= hour){
-            //     console.log("La fecha es mayor")
-            // } else {
-            //     console.log("La fecha es menor")
-            // }
         }
-        // console.log(data)
             
         userAppointments.value = data.filter(appointment => {
 
@@ -74,12 +56,8 @@ export const useUserStore = defineStore('user', () => {
 
             if(convertToDDMMYYYY(appointment.date) === convertToDDMMYYYY(today) && appointment.onlyHour >= hour){
                 return true
-            }
-             
+            }   
         })
-
-        // console.log(fechaQueVa)
-        // userAppointments.value = data
     }
 
     function logout() {
@@ -92,10 +70,8 @@ export const useUserStore = defineStore('user', () => {
 
     const getUserName = computed(() => user.value.name ? user.value.name : '')
    
-
     const noAppointments = computed(() => userAppointments.value.length === 0)
 
-  
     return {
         user,
         getUserName,
@@ -103,7 +79,6 @@ export const useUserStore = defineStore('user', () => {
         userAppointments,
         noAppointments,
         loading,
-        // loadingChange,
         getUserAppointments,
         login
     }

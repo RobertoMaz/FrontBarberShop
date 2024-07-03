@@ -61,7 +61,6 @@
             Crear Cuenta
         </FormKit>
     </FormKit>
-    
 </template>
 
 <script setup>
@@ -70,18 +69,14 @@
     import { reset } from '@formkit/vue'
     const toast = inject('toast')
 
-
     const handleSubmit = async ({password_confirm, ...formData}) => {
         try {
             const { data } =  await AuthApi.register(formData)
-            
-                toast.open({
-                    message: data.msg,
-                    type: 'success'
-                })
-                reset('registerForm')
-
-            
+            toast.open({
+                message: data.msg,
+                type: 'success'
+            })
+            reset('registerForm')     
         } catch (error) {
             toast.open({
                 message: error.response.data.msg,

@@ -25,5 +25,4 @@
             type: Object
         }
     })
-
 </script>

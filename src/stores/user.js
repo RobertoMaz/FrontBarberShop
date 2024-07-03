@@ -17,8 +17,6 @@ export const useUserStore = defineStore('user', () => {
         try {
             const { data } = await AuthApi.auth()
             user.value = data
-            // dejar comentado, sino llama 2 veces a la funcion. Revisar si pasa lo mismo con admin
-            // await getUserAppointments()
         } catch (error) {
             console.log(error)
         } finally {
@@ -43,6 +41,7 @@ export const useUserStore = defineStore('user', () => {
         const  { data } = await AppointmentApi.getUserAppointments(user.value._id)
         const today = new Date()
         const hour = today.getHours()
+        console.log(data)
         
         for (const arr of data){
             arr.onlyHour = parseInt(arr.time.split(':')[0])

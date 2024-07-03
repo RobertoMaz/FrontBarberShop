@@ -51,12 +51,6 @@ export const useAppointmentsStore = defineStore('appointments', () => {
         
         if(appointmentId.value) {
             time.value = data.filter(appointment => appointment._id === appointmentId.value)
-            //TODO
-            // revisar si quito estoy falla algo, creo que no
-            if(time.value.length === 0){
-            } else {
-                time.value = time.value[0].time
-            }
             appointmentsByDate.value = data.filter(appointment => appointment._id !== appointmentId.value)
         } else {
             appointmentsByDate.value = data
@@ -169,7 +163,8 @@ export const useAppointmentsStore = defineStore('appointments', () => {
             const hourToday = today.getHours()
 
             const onlyHour = parseInt(hour.split(':')[0])
-            if(onlyHour <= hourToday) return true
+
+            if(onlyHour <= hourToday && convertToDDMMYYYY(today) == date.value) return true
 
             return appointmentsByDate.value.find(appointment => appointment.time === hour)
         }

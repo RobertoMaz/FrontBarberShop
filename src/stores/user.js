@@ -41,7 +41,6 @@ export const useUserStore = defineStore('user', () => {
         const  { data } = await AppointmentApi.getUserAppointments(user.value._id)
         const today = new Date()
         const hour = today.getHours()
-        console.log(data)
         
         for (const arr of data){
             arr.onlyHour = parseInt(arr.time.split(':')[0])

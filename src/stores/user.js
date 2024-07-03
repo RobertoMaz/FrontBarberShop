@@ -1,8 +1,9 @@
 import { defineStore } from "pinia"
-import { ref, onMounted, computed } from "vue"
+import { ref, onMounted, computed, watch } from "vue"
 import AuthApi from "@/api/AuthApi"
 import { useRouter  } from "vue-router"
 import AppointmentApi from "@/api/AppointmentApi"
+import { convertToDDMMYYYY, convertToISO, displayDate } from "@/helpers/date"
 
 export const useUserStore = defineStore('user', () => {
 
@@ -18,21 +19,22 @@ export const useUserStore = defineStore('user', () => {
         try {
             const { data } = await AuthApi.auth()
             user.value = data
-            await getUserAppointments()
+            //dejar comentado, sino llama 2 veces a la funcion. Revisar si pasa lo mismo con admin
+            // await getUserAppointments()
         } catch (error) {
             console.log(error)
         } finally {
             loading.value = false
         }
     })
-   
+
 
     async function login(){
         try {
             
             const { data } = await AuthApi.auth()
             user.value = data
-           
+            
             await getUserAppointments()
         } catch (error) {
             console.log(error)
@@ -46,7 +48,38 @@ export const useUserStore = defineStore('user', () => {
     
     async function getUserAppointments() {
         const  { data } = await AppointmentApi.getUserAppointments(user.value._id)
-        userAppointments.value = data
+        const today = new Date()
+        const hour = today.getHours()
+        
+        
+        
+        // console.log(hour)
+        // console.log(convertToDDMMYYYY(hour))
+        // console.log(convertToDDMMYYYY(hour))
+        for (const arr of data){
+            arr.onlyHour = parseInt(arr.time.split(':')[0])
+            // if(convertToDDMMYYYY(arr.date) >= convertToDDMMYYYY(today) && arr.onlyHour >= hour){
+            //     console.log("La fecha es mayor")
+            // } else {
+            //     console.log("La fecha es menor")
+            // }
+        }
+        // console.log(data)
+            
+        userAppointments.value = data.filter(appointment => {
+
+            if(convertToDDMMYYYY(appointment.date) > convertToDDMMYYYY(today)){
+                return true
+            }
+
+            if(convertToDDMMYYYY(appointment.date) === convertToDDMMYYYY(today) && appointment.onlyHour >= hour){
+                return true
+            }
+             
+        })
+
+        // console.log(fechaQueVa)
+        // userAppointments.value = data
     }
 
     function logout() {

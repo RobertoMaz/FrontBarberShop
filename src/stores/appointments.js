@@ -13,7 +13,6 @@ export const useAppointmentsStore = defineStore('appointments', () => {
     const time = ref('')
     const appointmentsByDate = ref([])
     const appointmentId = ref('')
-    const idAppointment = ref('')
 
     const toast = inject('toast')
 
@@ -29,15 +28,15 @@ export const useAppointmentsStore = defineStore('appointments', () => {
     })
 
     // watch(date, async () =>{
-    watch(idAppointment, async () =>{
-        console.log(idAppointment.value)
-        console.log(appointmentId.value)
+    watch(appointmentId, async () =>{
+        // console.log(date.value)
         time.value = ''
         if(date.value === '') return
         const { data } = await AppointmentApi.getByDate(date.value)
         
         if(appointmentId.value) {
             time.value = data.filter(appointment => appointment._id === appointmentId.value)[0].time
+            // console.log(time.value)
             appointmentsByDate.value = data.filter(appointment => appointment._id !== appointmentId.value)
         } else {
             appointmentsByDate.value = data
@@ -45,14 +44,21 @@ export const useAppointmentsStore = defineStore('appointments', () => {
     })
 
     watch(date, async() => {
+        time.value = ''
+        if(date.value === '') return
         const { data } = await AppointmentApi.getByDate(date.value)
         
-        console.log(data)
-        console.log(appointmentId.value)
-        // if(appointmentId.value) {
-        //     time.value = data.filter(appointment => appointment._id === appointmentId.value)[0].time
-        //     appointmentsByDate.value = data.filter(appointment => appointment._id !== appointmentId.value)
-        // } 
+        if(appointmentId.value) {
+            time.value = data.filter(appointment => appointment._id === appointmentId.value)
+            if(time.value.length === 0){
+            } else {
+                time.value = time.value[0].time
+            }
+            // console.log(time.value)
+            appointmentsByDate.value = data.filter(appointment => appointment._id !== appointmentId.value)
+        } else {
+            appointmentsByDate.value = data
+        }
     })
 
     async function saveAppointment() {
@@ -138,7 +144,6 @@ export const useAppointmentsStore = defineStore('appointments', () => {
     }
 
     function setSelectedAppointment(appointment) {
-        idAppointment.value = appointment._id
         services.value = appointment.services
         date.value = convertToDDMMYYYY(appointment.date)
         time.value = appointment.time
@@ -165,6 +170,12 @@ export const useAppointmentsStore = defineStore('appointments', () => {
 
     const disableTime = computed(() => {
         return (hour) => {
+            const today = new Date()
+            const hourToday = today.getHours()
+
+            const onlyHour = parseInt(hour.split(':')[0])
+            if(onlyHour <= hourToday) return true
+
             return appointmentsByDate.value.find(appointment => appointment.time === hour)
         }
     })

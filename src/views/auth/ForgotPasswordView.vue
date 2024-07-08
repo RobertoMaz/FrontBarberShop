@@ -31,7 +31,7 @@
 <script setup>
     import AuthApi from '@/api/AuthApi'
     import { inject } from 'vue'
-    import { reset } from '@formkit/vue';
+    import { reset } from '@formkit/vue'
 
     const toast = inject('toast')
 

@@ -1,6 +1,6 @@
 <template>
-    <h2 class="text-4xl font-extrabold text-white mt-10">Mis Citas</h2>
-    <p class="text-white text-lg mt-5">A continuación podrás administrar tus próximas citas</p>
+    <h2 class="text-4xl font-extrabold text-white mt-5 lg:mt-10">Mis Citas</h2>
+    <p class="text-white text-lg mt-2 lg:mt-5">Tus próximas citas</p>
 
     <p 
         v-if="user.loading"
@@ -17,7 +17,7 @@
         </p>
         <div
             v-else
-            class="grid grid-cols-1 gap-5 mt-10"
+            class="grid grid-cols-1 gap-5 mt-3 lg:mt-10"
         >
             <Appointment 
                 v-for=" appointment in user.userAppointments"

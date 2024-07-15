@@ -25,7 +25,7 @@
     >
 
     </div>
-    <div class="md:w-2/3 px-10 min-h-full overflow-y-scroll">
+    <div class="md:w-2/3 px-4 lg:px-10 min-h-full overflow-y-scroll">
       <RouterView />
     </div>
   </div>

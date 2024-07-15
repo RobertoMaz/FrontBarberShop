@@ -1,5 +1,5 @@
 <template>
-    <main class="space-y-6">
+    <main class="space-y-6 mt-5 lg:mt-8">
        <AppointmentsView />
            </main>
 </template>

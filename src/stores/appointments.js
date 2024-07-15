@@ -13,6 +13,8 @@ export const useAppointmentsStore = defineStore('appointments', () => {
     const time = ref('')
     const appointmentsByDate = ref([])
     const appointmentId = ref('')
+    const isAppointmentConfirmed = ref(false)
+    const isSavingAppointment = ref(false)
 
     const toast = inject('toast')
 
@@ -57,7 +59,19 @@ export const useAppointmentsStore = defineStore('appointments', () => {
         }
     })
 
+    const confirmAppointment = () => {
+        isAppointmentConfirmed.value = true
+    }
+
     async function saveAppointment() {
+        console.log(isSavingAppointment.value)
+        if (isSavingAppointment.value) {
+            return // Evitar múltiples envíos si ya se está guardando
+        }
+        
+        isSavingAppointment.value = true // Activar estado de carga
+        
+        console.log(isSavingAppointment.value)
         const appointment = {
             services: services.value.map(service => service._id),
             date: convertToISO(date.value),
@@ -102,11 +116,14 @@ export const useAppointmentsStore = defineStore('appointments', () => {
         services.value = []
         date.value = ''
         time.value = ''
-        appointmentId.value = ''   
+        appointmentId.value = ''  
+        isSavingAppointment.value = false 
     }
 
     async function cancelAppointment(id) {
+
         if(confirm('¿Deseas cancelar esta cita?')){
+            user.loading = true
             try {
                 const { data } = await AppointmentApi.deleteAppointment(id)
                 toast.open({
@@ -119,6 +136,8 @@ export const useAppointmentsStore = defineStore('appointments', () => {
                     message: error.response.data.msg,
                     type: 'error'
                 })
+            } finally{
+                user.loading = false
             }
         }
     }
@@ -138,6 +157,7 @@ export const useAppointmentsStore = defineStore('appointments', () => {
         time.value = appointment.time
         appointmentId.value = appointment._id
     }
+    
  
     const isServiceSelected = computed(() => {
         return id => services.value.some(service => service._id === id)
@@ -186,6 +206,8 @@ export const useAppointmentsStore = defineStore('appointments', () => {
         disableTime,
         setSelectedAppointment,
         clearAppointmentData,
-        cancelAppointment
+        cancelAppointment,
+        isAppointmentConfirmed,
+        confirmAppointment
     }
 })

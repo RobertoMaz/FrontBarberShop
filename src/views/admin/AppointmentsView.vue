@@ -1,8 +1,7 @@
 <template>
     <div class="flex justify-between">
         <div>
-            <h1 class="text-2xl lg:text-6xl font-black text-white p-2">App Salón</h1>
-            <h2 class="text-xl lg:text-2xl font-black text-white p-2">Panel de Administración</h2>
+            <h1 class="text-2xl lg:text-4xl font-black text-white">App Salón</h1>
         </div>
 
         <div class="flex flex-col space-y-5">
@@ -19,7 +18,7 @@
         </div>
     </div>
     <p class="text-white text-lg mt-5">
-        A continuación podrás administrar tus próximas citas
+        Tus próximas citas
     </p>
     <p
         v-if="user.loading"
@@ -33,7 +32,7 @@
         </p>
         <div 
             v-else
-            class="grid grid-cols-1 gap-5 mt-10"    
+            class="grid grid-cols-1 gap-5 mt-5"    
         >
             <AdminAppointment
                 v-for="appointment in user.userAppointments"

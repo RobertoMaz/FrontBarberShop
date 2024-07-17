@@ -11,7 +11,7 @@ import App from './App.vue'
 import router from './router'
 
 const $toast = useToast({
-    duration: 5000,
+    duration: 4000,
     position: 'top-right'
 })
 

@@ -1,13 +1,12 @@
 <template>
     <h1 class="text-4xl font-extrabold text-white text-center mt-10">Olvide mi password</h1>
-    <p class="text-2xl text-white text-center my-5">Recupera el acceso a tu cuenta</p>
+    <p class="text-xl lg:text-2xl text-white text-center my-2 lg:my-5">Recupera el acceso a tu cuenta</p>
     <FormKit
         id="forgotPassword"
         type="form"
         :actions="false"
         incomplete-message="No se pudo reestablecer password"
         @submit="handleSubmit"
-
     >
         <FormKit 
             type="email"

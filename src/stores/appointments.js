@@ -64,14 +64,12 @@ export const useAppointmentsStore = defineStore('appointments', () => {
     }
 
     async function saveAppointment() {
-        console.log(isSavingAppointment.value)
         if (isSavingAppointment.value) {
             return // Evitar múltiples envíos si ya se está guardando
         }
         
-        isSavingAppointment.value = true // Activar estado de carga
+        isSavingAppointment.value = true
         
-        console.log(isSavingAppointment.value)
         const appointment = {
             services: services.value.map(service => service._id),
             date: convertToISO(date.value),
@@ -190,7 +188,6 @@ export const useAppointmentsStore = defineStore('appointments', () => {
         }
     })
 
-
     return {
         onServiceSelected,
         isServiceSelected,
@@ -208,6 +205,7 @@ export const useAppointmentsStore = defineStore('appointments', () => {
         clearAppointmentData,
         cancelAppointment,
         isAppointmentConfirmed,
-        confirmAppointment
+        confirmAppointment,
+        isSavingAppointment
     }
 })

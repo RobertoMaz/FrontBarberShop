@@ -12,16 +12,16 @@
                     Cerrar sesión
                 </button>
             </div>
-            <nav class="flex flex-col-2 lg:flex-row gap-2 items-center lg:justify-end w-full">
+            <nav class="flex flex-col-2 lg:flex-row gap-3 items-center lg:justify-end w-full">
                 <RouterLink
                     :to="{name: 'my-appointments'}"
-                    class="p-3 text-gray-200 uppercase text-xs font-bold rounded-lg bg-blue-700 hover:bg-blue-900 w-full lg:w-auto text-center"
+                    class="p-3 text-gray-200 uppercase font-bold rounded-lg bg-blue-700 hover:bg-blue-900 w-full lg:w-auto text-center"
                 >
                     Mis citas
                 </RouterLink>
                 <RouterLink
                     :to="{name: 'new-appointments'}"
-                    class="p-3 text-gray-200 uppercase text-xs font-bold rounded-lg bg-blue-700 hover:bg-blue-900 w-full lg:w-auto text-center"
+                    class="p-3 text-gray-200 uppercase font-bold rounded-lg bg-blue-700 hover:bg-blue-900 w-full lg:w-auto text-center"
                 >
                     Nueva Cita
                 </RouterLink>

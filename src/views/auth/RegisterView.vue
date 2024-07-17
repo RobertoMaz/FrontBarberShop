@@ -1,14 +1,13 @@
 <template>
 
-    <h1 class="text-6xl font-extrabold text-white text-center mt-10">Crea una cuenta</h1>
-    <p class="text-2xl text-white text-center my-5">Crea una cuenta en BarberShop</p>
+    <h1 class="text-4xl lg:text-6xl font-extrabold text-white text-center mt-5 lg:mt-10">Crea una cuenta</h1>
+    <p class="text-xl lg:text-2xl text-white text-center my-2 lg:my-5">Crea una cuenta en BarberShop</p>
     <FormKit
         id="registerForm"
         type="form"
         :actions="false"
         incomplete-message="No se pudo crear la cuenta"
         @submit="handleSubmit"
-
     >
         <FormKit 
             type="text"
@@ -67,6 +66,7 @@
     import AuthApi from '@/api/AuthApi'
     import { inject } from 'vue'
     import { reset } from '@formkit/vue'
+    
     const toast = inject('toast')
 
     const handleSubmit = async ({password_confirm, ...formData}) => {
